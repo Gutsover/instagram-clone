@@ -17,7 +17,7 @@ quasar dev
 quasar build
 ```
 
-![Home page](src/assets/pic1.png)
-
-![Camera page](src/assets/pic2.png)
+![Home page](src\assets\pic1.png "Home Page")
+------------------------------------------------
+![Camera page](src\assets\pic2.png "Camera Page")
 
