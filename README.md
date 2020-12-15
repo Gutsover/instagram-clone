@@ -1,7 +1,6 @@
-# Quasargram (quasargram)
+# Quasargram
 
-A Quasar Framework app
-
+Une application réalisée avec le framework Quasar, imitant Instagram, fonctionnel.
 ## Install the dependencies
 ```bash
 npm install
@@ -18,5 +17,7 @@ quasar dev
 quasar build
 ```
 
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+![Home page](src/assets/pic1)
+
+![Camera page](src/assets/pic2)
+
