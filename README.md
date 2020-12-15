@@ -16,8 +16,9 @@ quasar dev
 ```bash
 quasar build
 ```
+![HomePage](https://zupimages.net/up/20/51/exuz.png)
 
-![Home page](../src/assets/pic2.png "Home Page")
-------------------------------------------------
-![Camera page](../src/assets/pic2.png "Camera Page")
+--------------------
+
+![CameraPage](https://zupimages.net/up/20/51/iu25.png)
 
