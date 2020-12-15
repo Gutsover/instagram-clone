@@ -11,6 +11,7 @@
     </div>
     <div class="text-center q-pa-md">
       <q-btn
+        v-if="hasCameraSupport"
         @click="captureImage"
         color="grey-10"
         icon="eva-camera"
@@ -60,8 +61,9 @@ export default {
         photo: null,
         date: Date.now()
       },
-      imageCaptured: false
-    };
+      imageCaptured: false,
+      hasCameraSupport: true
+    }
   },
   methods: {
     initCamera() {
@@ -71,7 +73,9 @@ export default {
         })
         .then(stream => {
           this.$refs.video.srcObject = stream;
-        });
+        }).catch(error => {
+          this.hasCameraSupport = false
+        })
     },
     captureImage() {
       let video = this.$refs.video;
