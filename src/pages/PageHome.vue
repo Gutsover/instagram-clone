@@ -37,8 +37,6 @@
             </q-card-section>
           </q-card>
         </template>
-
-
           <template v-else-if="!loadingPosts && !posts.length">
             <h5 class="text-center text-grey">No posts yet.</h5>
           </template>
@@ -110,7 +108,7 @@ export default {
     getPosts() {
       this.loadingPosts = true;
       this.$axios
-        .get("http://localhost:3000/posts")
+        .get(`${ process.env.API }/posts`)
         .then(response => {
           this.posts = response.data;
           this.loadingPosts = false;
