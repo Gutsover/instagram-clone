@@ -42,7 +42,7 @@
       <div class="row justify-center q-ma-md">
         <q-input
           v-model="post.location"
-          :loading="locationLoading"
+          :loading="locationLoading && locationSupported"
           class="col col-sm-6"
           label="Location"
           dense
@@ -79,7 +79,13 @@ export default {
       imageUpload: [],
       hasCameraSupport: true,
       locationLoading: false
-    };
+    }
+  },
+  computed: {
+    locationSupported() {
+      if ('geolocation' in navigator) return true
+      return false
+    }
   },
   methods: {
     initCamera() {
