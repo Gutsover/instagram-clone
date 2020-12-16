@@ -47,7 +47,7 @@
           dense
         >
           <template v-slot:append>
-            <q-btn round dense flat icon="eva-navigation-2-outline" />
+            <q-btn @click="getLocation"  icon="eva-navigation-2-outline" round dense flat/>
           </template>
         </q-input>
       </div>
@@ -101,6 +101,7 @@ export default {
       context.drawImage(video, 0, 0, canvas.width, canvas.height)
       this.imageCaptured = true
       this.post.photo = this.dataURItoBlob(canvas.toDataURL())
+      this.disableCamera()
     },
     captureImageFallback(file) {
       this.post.photo = file
@@ -120,6 +121,11 @@ export default {
         img.src = event.target.result
       }
       reader.readAsDataURL(file)
+    },
+    disableCamera() {
+      this.$refs.video.srcObject.getVideoTracks().forEach(track => {
+        track.stop()
+      })
     },
     dataURItoBlob(dataURI) {
       // convert base64 to raw binary data held in a string
@@ -146,10 +152,42 @@ export default {
       // write the ArrayBuffer to a blob, and you're done
       var blob = new Blob([ab], { type: mimeString })
       return blob
+    },
+    getLocation() {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.getCityAndCountry(position)
+      }, error => {
+        this.locationError()
+      }, { timeout: 7000 })
+    },
+    getCityAndCountry(position) {
+      let apiUrl = `https://geocode.xyz/${ position.coords.latitude },${ position.coords.longitude }?json=1`
+      this.$axios.get(apiUrl).then(result => {
+        this.locationSuccess(result)
+      }).catch(err => {
+        this.locationError()
+      })
+    },
+    locationSuccess(result) {
+      this.post.location = result.data.city
+      if (result.data.country) {
+        this.post.location += `, ${ result.data.country }`
+      }
+    },
+    locationError() {
+      this.$q.dialog({
+        title: 'Error',
+        message: 'Could not find your location.'
+      })
     }
   },
   mounted() {
     this.initCamera();
+  },
+  beforeDestroy() {
+    if (this.hasCameraSupport) {
+      this.disableCamera()
+    }
   }
 }
 </script>
